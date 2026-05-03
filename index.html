@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Komisioni i Kulturës dhe Librit — Parlamenti i Nxënësve</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --parchment: #EDE6D6;
+    --ink: #1A1208;
+    --sepia: #5C4A2A;
+    --gold: #C9A84C;
+    --gold-light: #E8CC7A;
+    --red: #8B2020;
+    --red-light: #B03030;
+    --sage: #4A6741;
+    --fog: #D4CCB8;
+    --shadow: rgba(26,18,8,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+  }
+
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 36px 32px 28px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .emblem {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+  }
+
+  .header-text {
+    flex: 1;
+  }
+
+  .header-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 4vw, 30px);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.15;
+  }
+
+  .header-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--fog);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── NAV STRIP ── */
+  .nav-strip {
+    background: var(--parchment);
+    border-bottom: 1px solid var(--fog);
+    padding: 0 32px;
+  }
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .nav-tab {
+    padding: 14px 22px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--sepia);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.25s;
+    user-select: none;
+  }
+  .nav-tab:hover { color: var(--ink); border-bottom-color: var(--gold); }
+  .nav-tab.active { color: var(--red); border-bottom-color: var(--red); font-weight: 600; }
+
+  /* ── SCREENS ── */
+  .screen { display: none; animation: fadeUp 0.4s ease both; }
+  .screen.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SCREEN 1: WELCOME / SELECT GENRE ── */
+  .welcome-hero {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 32px 24px;
+    text-align: center;
+  }
+  .welcome-label {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .welcome-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .welcome-headline em {
+    font-style: italic;
+    color: var(--red);
+  }
+  .welcome-desc {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--sepia);
+    max-width: 560px;
+    margin: 0 auto 48px;
+    line-height: 1.6;
+  }
+
+  .genre-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    padding: 0 32px 64px;
+  }
+
+  .genre-card {
+    background: white;
+    border: 1px solid var(--fog);
+    border-radius: 4px;
+    padding: 28px 20px 24px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .genre-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.25s;
+    transform-origin: left;
+  }
+  .genre-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 6px 24px var(--shadow);
+    transform: translateY(-3px);
+  }
+  .genre-card:hover::before { transform: scaleX(1); }
+  .genre-card.selected {
+    border-color: var(--red);
+    background: #FDF8F3;
+    box-shadow: 0 8px 28px rgba(139,32,32,0.12);
+  }
+  .genre-card.selected::before {
+    background: var(--red);
+    transform: scaleX(1);
+  }
+
+  .genre-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .genre-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .genre-desc {
+    font-size: 13px;
+    color: var(--sepia);
+    font-style: italic;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--red);
+    color: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 80px;
+  }
+  .btn-primary:hover { background: var(--red-light); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(139,32,32,0.3); }
+  .btn-primary:disabled { background: var(--fog); color: var(--sepia); cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* ── SCREEN 2: VEPRAT ── */
+  .works-header {
+    background: var(--ink);
+    padding: 40px 32px;
+    position: relative;
+  }
+  .works-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .works-header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .works-title-group {}
+  .works-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .works-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 700;
+    color: var(--cream);
+  }
+  .works-count {
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    color: var(--fog);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 11px 24px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .btn-add:hover { background: var(--gold); color: var(--ink); }
+
+  /* FILTER BAR */
+  .filter-bar {
+    background: var(--parchment);
+    border-bottom: 1px solid var(--fog);
+    padding: 14px 32px;
+  }
+  .filter-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sepia);
+    margin-right: 4px;
+  }
+  .filter-pill {
+    padding: 5px 14px;
+    border: 1px solid var(--fog);
+    border-radius: 20px;
+    background: white;
+    font-family: 'Crimson Pro', serif;
+    font-size: 13px;
+    color: var(--sepia);
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .filter-pill:hover { border-color: var(--gold); color: var(--ink); }
+  .filter-pill.active { background: var(--red); border-color: var(--red); color: white; }
+
+  /* WORKS GRID */
+  .works-grid {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+    display: grid;
+    gap: 28px;
+  }
+
+  .work-card {
+    background: white;
+    border: 1px solid var(--fog);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.25s;
+    display: grid;
+    grid-template-columns: 8px 1fr;
+    animation: fadeUp 0.4s ease both;
+  }
+  .work-card:hover {
+    box-shadow: 0 8px 32px var(--shadow);
+    transform: translateY(-2px);
+  }
+
+  .work-stripe {
+    background: var(--gold);
+  }
+  .work-stripe.poezi { background: #6B4C9A; }
+  .work-stripe.ese { background: var(--red); }
+  .work-stripe.pershkrim { background: var(--sage); }
+  .work-stripe.tregim { background: #3A6B8A; }
+
+  .work-body {
+    padding: 28px 32px 24px;
+  }
+
+  .work-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .work-badge {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    background: var(--parchment);
+    color: var(--sepia);
+    border: 1px solid var(--fog);
+  }
+  .work-badge.poezi { background: #F0EAF8; border-color: #C4A8E0; color: #5A3A85; }
+  .work-badge.ese { background: #FDF0F0; border-color: #E8AAAA; color: var(--red); }
+  .work-badge.pershkrim { background: #EFF5EE; border-color: #A8C4A5; color: var(--sage); }
+  .work-badge.tregim { background: #EEF3F7; border-color: #A5BDD0; color: #2E5670; }
+
+  .work-date {
+    font-size: 12px;
+    color: var(--fog);
+    font-style: italic;
+    margin-left: auto;
+  }
+
+  .work-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+
+  .work-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #3A2E1A;
+    max-height: 120px;
+    overflow: hidden;
+    position: relative;
+  }
+  .work-text.expanded { max-height: none; }
+  .work-text:not(.expanded)::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 50px;
+    background: linear-gradient(transparent, white);
+  }
+
+  .work-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--parchment);
+  }
+  .work-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .work-author-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .work-author-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    font-style: italic;
+  }
+  .btn-read {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--red);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 0;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .btn-read:hover { border-bottom-color: var(--red); }
+
+  /* ── SCREEN 3: SHTO VEPER ── */
+  .form-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 50px 32px 80px;
+  }
+  .form-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .form-subline {
+    font-size: 17px;
+    font-style: italic;
+    color: var(--sepia);
+    margin-bottom: 40px;
+  }
+
+  .form-group {
+    margin-bottom: 28px;
+  }
+  .form-label {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sepia);
+    margin-bottom: 10px;
+  }
+  .form-label span { color: var(--red); }
+
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--fog);
+    border-radius: 3px;
+    padding: 13px 16px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 17px;
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+  }
+  .form-textarea {
+    min-height: 280px;
+    resize: vertical;
+    line-height: 1.7;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .genre-pills-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .genre-pill {
+    padding: 8px 18px;
+    border: 1px solid var(--fog);
+    border-radius: 3px;
+    background: white;
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    color: var(--sepia);
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .genre-pill:hover { border-color: var(--gold); }
+  .genre-pill.selected { background: var(--red); border-color: var(--red); color: white; }
+
+  .form-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 36px;
+    align-items: center;
+  }
+  .btn-submit {
+    flex: 1;
+    padding: 16px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-submit:hover { background: var(--red-light); box-shadow: 0 4px 20px rgba(139,32,32,0.25); }
+  .btn-cancel {
+    padding: 16px 24px;
+    background: transparent;
+    color: var(--sepia);
+    border: 1px solid var(--fog);
+    border-radius: 3px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-cancel:hover { border-color: var(--sepia); color: var(--ink); }
+
+  /* SUCCESS TOAST */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--ink);
+    color: var(--cream);
+    padding: 14px 28px;
+    border-radius: 3px;
+    border-left: 4px solid var(--gold);
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    z-index: 9999;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* DECORATIVE DIVIDER */
+  .ornament {
+    text-align: center;
+    font-size: 22px;
+    color: var(--gold);
+    margin: 16px 0 32px;
+    letter-spacing: 8px;
+    opacity: 0.7;
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 80px 32px;
+    color: var(--sepia);
+  }
+  .empty-state-icon { font-size: 48px; margin-bottom: 20px; opacity: 0.5; }
+  .empty-state-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-style: italic;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--fog);
+    text-align: center;
+    padding: 24px 32px;
+    font-size: 13px;
+    font-style: italic;
+    border-top: 1px solid #2A2010;
+  }
+  footer strong { color: var(--gold); font-style: normal; }
+
+  @media (max-width: 600px) {
+    .header-inner { padding: 24px 20px; gap: 16px; }
+    .emblem { width: 52px; height: 52px; }
+    .genre-grid { padding: 0 20px 48px; grid-template-columns: 1fr 1fr; }
+    .works-grid { padding: 28px 20px 60px; }
+    .form-wrapper { padding: 36px 20px 60px; }
+    .form-row { grid-template-columns: 1fr; }
+    .works-header-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <svg class="emblem" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Eagle silhouette (Albanian flag inspired) -->
+      <circle cx="40" cy="40" r="38" stroke="#C9A84C" stroke-width="1.5" opacity="0.4"/>
+      <circle cx="40" cy="40" r="33" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+      <!-- Book -->
+      <rect x="22" y="35" width="36" height="24" rx="2" fill="#C9A84C" opacity="0.15" stroke="#C9A84C" stroke-width="1"/>
+      <line x1="40" y1="35" x2="40" y2="59" stroke="#C9A84C" stroke-width="1"/>
+      <!-- Pages -->
+      <path d="M24 38 Q32 36 40 38" stroke="#C9A84C" stroke-width="0.8" fill="none" opacity="0.7"/>
+      <path d="M24 42 Q32 40 40 42" stroke="#C9A84C" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <path d="M24 46 Q32 44 40 46" stroke="#C9A84C" stroke-width="0.8" fill="none" opacity="0.3"/>
+      <path d="M40 38 Q48 36 56 38" stroke="#C9A84C" stroke-width="0.8" fill="none" opacity="0.7"/>
+      <path d="M40 42 Q48 40 56 42" stroke="#C9A84C" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <path d="M40 46 Q48 44 56 46" stroke="#C9A84C" stroke-width="0.8" fill="none" opacity="0.3"/>
+      <!-- Quill -->
+      <path d="M40 34 C36 28 30 20 26 16 C30 18 36 22 40 28 C44 22 50 18 54 16 C50 20 44 28 40 34Z" fill="#C9A84C" opacity="0.8"/>
+      <line x1="40" y1="34" x2="40" y2="37" stroke="#C9A84C" stroke-width="1"/>
+      <!-- Stars -->
+      <text x="20" y="30" font-size="6" fill="#C9A84C" opacity="0.6">✦</text>
+      <text x="53" y="30" font-size="6" fill="#C9A84C" opacity="0.6">✦</text>
+    </svg>
+    <div class="header-text">
+      <div class="header-eyebrow">Republika e Shqipërisë</div>
+      <div class="header-title">Parlamenti i Nxënësve të Shqipërisë</div>
+      <div class="header-subtitle">Komisioni i Kulturës dhe Librit — Platforma e Krijimtarisë Letrare</div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav-strip">
+  <div class="nav-inner">
+    <div class="nav-tab active" onclick="showScreen('home')">Faqe Kryesore</div>
+    <div class="nav-tab" onclick="showScreen('works')">Veprat</div>
+    <div class="nav-tab" onclick="showScreen('add')">Shto Veprën</div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SCREEN 1: HOME / SELECT GENRE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="screen active" id="screen-home">
+  <div class="welcome-hero">
+    <div class="welcome-label">✦ Komisioni i Kulturës dhe Librit ✦</div>
+    <h1 class="welcome-headline">Shprehja është<br><em>forma më e lartë</em><br>e guximit.</h1>
+    <p class="welcome-desc">Zgjidhni rubrikën tuaj të shkrimit dhe eksploroni ose ndani talentin tuaj letrar.</p>
+  </div>
+
+  <div class="genre-grid" id="genre-grid">
+    <div class="genre-card" data-genre="Poezi" onclick="selectGenre(this)">
+      <span class="genre-icon">🪶</span>
+      <div class="genre-name">Poezi</div>
+      <div class="genre-desc">Vargje dhe ritëm shpirtëror</div>
+    </div>
+    <div class="genre-card" data-genre="Ese" onclick="selectGenre(this)">
+      <span class="genre-icon">🖊️</span>
+      <div class="genre-name">Ese</div>
+      <div class="genre-desc">Mendim i thellë e argumentues</div>
+    </div>
+    <div class="genre-card" data-genre="Pershkrim" onclick="selectGenre(this)">
+      <span class="genre-icon">🌿</span>
+      <div class="genre-name">Përshkrim</div>
+      <div class="genre-desc">Imazhe me fjalë të gjalla</div>
+    </div>
+    <div class="genre-card" data-genre="Tregim" onclick="selectGenre(this)">
+      <span class="genre-icon">📖</span>
+      <div class="genre-name">Tregim</div>
+      <div class="genre-desc">Narrativa dhe rrëfim</div>
+    </div>
+    <div class="genre-card" data-genre="Aforizma" onclick="selectGenre(this)">
+      <span class="genre-icon">💬</span>
+      <div class="genre-name">Aforizma</div>
+      <div class="genre-desc">Urtësi e kondensuar</div>
+    </div>
+    <div class="genre-card" data-genre="Te gjitha" onclick="selectGenre(this)">
+      <span class="genre-icon">✨</span>
+      <div class="genre-name">Të Gjitha</div>
+      <div class="genre-desc">Shiko çdo vepër</div>
+    </div>
+  </div>
+
+  <div style="text-align:center">
+    <button class="btn-primary" id="btn-explore" disabled onclick="goToWorks()">
+      Eksploroni Veprat &rarr;
+    </button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SCREEN 2: VEPRAT -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="screen" id="screen-works">
+  <div class="works-header">
+    <div class="works-header-inner">
+      <div class="works-title-group">
+        <div class="works-eyebrow">Komisioni i Kulturës dhe Librit</div>
+        <div class="works-title" id="works-screen-title">Veprat Letrare</div>
+        <div class="works-count" id="works-count"></div>
+      </div>
+      <button class="btn-add" onclick="showScreen('add')">＋ &nbsp;Shto Veprën</button>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-inner">
+      <span class="filter-label">Filtro:</span>
+      <div class="filter-pill active" onclick="filterWorks(this,'Te gjitha')">Të Gjitha</div>
+      <div class="filter-pill" onclick="filterWorks(this,'Poezi')">Poezi</div>
+      <div class="filter-pill" onclick="filterWorks(this,'Ese')">Ese</div>
+      <div class="filter-pill" onclick="filterWorks(this,'Pershkrim')">Përshkrim</div>
+      <div class="filter-pill" onclick="filterWorks(this,'Tregim')">Tregim</div>
+      <div class="filter-pill" onclick="filterWorks(this,'Aforizma')">Aforizma</div>
+    </div>
+  </div>
+
+  <div class="works-grid" id="works-grid"></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SCREEN 3: SHTO VEPER -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="screen" id="screen-add">
+  <div class="form-wrapper">
+    <div class="form-headline">Ngarkoni Veprën Tuaj</div>
+    <p class="form-subline">Çdo fjalë e shkruar me zemër meriton të dëgjohet.</p>
+    <div class="ornament">— ✦ —</div>
+
+    <div class="form-group">
+      <label class="form-label">Rubrika e Shkrimit <span>*</span></label>
+      <div class="genre-pills-form" id="form-genre-pills">
+        <div class="genre-pill" data-val="Poezi" onclick="selectFormGenre(this)">🪶 Poezi</div>
+        <div class="genre-pill" data-val="Ese" onclick="selectFormGenre(this)">🖊️ Ese</div>
+        <div class="genre-pill" data-val="Pershkrim" onclick="selectFormGenre(this)">🌿 Përshkrim</div>
+        <div class="genre-pill" data-val="Tregim" onclick="selectFormGenre(this)">📖 Tregim</div>
+        <div class="genre-pill" data-val="Aforizma" onclick="selectFormGenre(this)">💬 Aforizma</div>
+      </div>
+      <input type="hidden" id="form-genre" value="">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Titulli i Veprës <span>*</span></label>
+      <input class="form-input" type="text" id="form-title" placeholder="p.sh. Adoleshenca, Ëndrrat…">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Emri <span>*</span></label>
+        <input class="form-input" type="text" id="form-emri" placeholder="Emri juaj">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mbiemri <span>*</span></label>
+        <input class="form-input" type="text" id="form-mbiemri" placeholder="Mbiemri juaj">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Vepra Juaj <span>*</span></label>
+      <textarea class="form-textarea" id="form-text" placeholder="Shkruani ose ngjitni veprën tuaj këtu…"></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-cancel" onclick="showScreen('works')">Anulo</button>
+      <button class="btn-submit" onclick="submitWork()">Ngarko Veprën ✦</button>
+    </div>
+  </div>
+</section>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Parlamenti i Nxënësve të Shqipërisë</strong> &mdash; Komisioni i Kulturës dhe Librit<br>
+  <span style="font-size:12px; opacity:0.7">Platforma e krijimtarisë letrare të nxënësve shqiptarë</span>
+</footer>
+
+<!-- Firebase SDK v10 -->
+<script type="module">
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ══════════════════════════════════════════════════════════
+//  🔧 VENDOS KËTU CONFIG-UN TËND TË FIREBASE  (shih udhëzuesin)
+// ══════════════════════════════════════════════════════════
+const firebaseConfig = {
+  apiKey:            "AIzaSyAVUcXq9aKSrSBXP_2IfEiUMFVdSQauXxM",
+  authDomain:        "parlamenti-nxenesve.firebaseapp.com",
+  projectId:         "parlamenti-nxenesve",
+  storageBucket:     "parlamenti-nxenesve.firebasestorage.app",
+  messagingSenderId: "326548381190",
+  appId:             "1:326548381190:web:6df78b1ff3445290bcad87"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+const COLL = "veprat"; // emri i koleksionit në Firestore
+
+// ══════════════════════════════════════
+// VEPRAT FILLESTARE
+// ══════════════════════════════════════
+const DEFAULT_WORKS = [
+  {
+    genre: "Pershkrim",
+    title: "Adoleshenca",
+    text: "Koha kur zemra fillon dhe flet më shumë se mendja. Nuk e kupton sa shpejt ndryshon. Një ditë je fëmijë, dhe papritur ndihesh ndryshe, sikur diçka brenda teje është zgjuar dhe rritur. Mendimet bëhen më të thella, ndjenjat më të forta, ëndërrat marrin krahë dhe bota përreth nuk është aq e thjeshtë sa dikur. Një udhëtim i bukur por jo i lehtë, një rrugë që të shtyn drejt versionit më të mirë të vetes. Ajo kur ne vërtet duam të dimë kush jemi dhe pyesim veten…Kush jam unë? Çfarë synoj të bëhem? A jam unë mjaftueshëm?\n\nPor nuk është vetëm pasiguri, në botën e adoleshencës ekziston dhe magjia e saj. Ajo ndjesia kur me miqtë qesh pa arsye, kur ditët e zakonshme me ta bëhen magjike e kur me ta ndan të qeshurën, të qarën, gëzimin e hidhërimin. Miqtë me të cilët bëhesh familje, ndan sekrete dhe mbështetesh kur je keq.\n\nNjë rrugë me shumë sfida, mes fëmijërisë dhe të rriturit. Nuk je as fëmijë dhe as i rritur plotësisht. Një adoleshent që ndihet sikur askush se kupton, që humb vetëbesimin. Ka ditë kur ndihesh i humbur, heshtja bëhet më e rëndë se fjalët dhe pasqyra nuk të jep përgjigjet që kërkon. Ndonjëherë humbet arsyen dhe zemra e mendja nuk bien dakord. Çdo zhgënjim na mëson të ngihemi, çdo pasiguri na shtyn të njohim veten më mirë. Një rrugë ku çdo hap të mëson diçka për veten.",
+    author: "Amelia Bardhoshi",
+    year: "2025"
+  },
+  {
+    genre: "Ese",
+    title: "A e bën njeriun më të fortë dhimbja apo e thyen?",
+    text: "Dhimbja është një nga përvojat më të pashmangshme të jetës njerëzore. Ajo nuk pyet për moshë, kohë apo rrethana, vjen papritur dhe lë një gjurmë që nuk zhduket lehtë. Për disa, dhimbja bëhet burim force, ndërsa për të tjerë shndërrohet në një barrë që i rrëzon.\n\nDhimbja ka fuqinë të ndërtojë karakterin. Kur një njeri përballet me humbjen, zhgënjim apo dështim, ai mëson të qëndrojë në këmbë edhe kur gjithçka duket e rrenuar. Nga këto përvoja lind durimi, pjekuria dhe një kuptim më i thellë i jetës. Dhimbja e bën njeriun më të vetëdijshëm për rëndësinë e njerëzve që e rrethojnë.\n\nMegjithatë, nuk mund të mohohet se dhimbja ka edhe një anë shkatërruese. Ka raste kur ajo është aq e fortë, sa njeriu ndien që nuk ka forcë për të vazhduar. Ajo mund të sjellë humbje shprese, vetmi dhe një ndjenjë boshllëku që duket e pafund. Jo të gjithë kanë të njëjtat mundësi apo mbështetje për ta përballuar dhimbjen, dhe për disa ajo mund të jetë më shumë se një sfidë — mund të jetë një barrë që i thyen.\n\nE vërteta qëndron diku në mes. Dhimbja nuk është në vetvete as forcë, as dobësi. Ajo bëhet ajo që ne arrijmë ta përballojmë. Disa njerëz arrijnë të ringrihen më të fortë, ndërsa të tjerët kanë nevojë për kohë, ndihmë dhe mirëkuptim. Ndoshta forca e vërtetë nuk qëndron në mungesën e dhimbjes, por në përpjekjen për të vazhduar, edhe kur ajo është e pranishme.",
+    author: "Laurena D.",
+    year: "2025"
+  },
+  {
+    genre: "Ese",
+    title: "Ëndrrat",
+    text: "Ëndrrat janë shumë të bukura, ato janë një pjesë e jetës sonë. Ëndrrat janë ato që gjithmonë na shtyjnë të ecim përpara. Çdo njeri ka ëndrrat e tij të cilat lindin në fëmijëri.\n\nËndrrat janë ato që na motivojnë dhe na japin shpresë. Kur kemi një qëllim për ta arritur nuk duhet që të dorëzohemi edhe nëse jemi në vështirësi. Ëndrrat na japin gjithmonë e më shumë forcë për të vazhduar përpara edhe pse rruga mund të jetë e gjatë. Jeta pa ëndrra do të ishte pa drejtim dhe pa kuptim.\n\nPër t'i realizuar ëndrrat nuk duhet të presim nëse një ditë ato realizohen vetë, por për t'i realizuar ato duhet punë, forcë dhe durim edhe pse do të përballesh me pengesa. Nëse beson në ëndrrat e tua nuk duhet të dorëzohesh sepse do të arrish më shumë.\n\nËndrrat janë udhërrëfyes i jetës sonë. Ato na mësojnë se si të rritemi dhe të arrijmë sa më lart. Andaj për t'i realizuar ëndrrat tua duhet të punosh fort edhe atëherë kur nuk ke shpresa.\n\nËndërro, Jeto, Fito",
+    author: "Drita Thaçi",
+    year: "2025"
+  }
+];
+
+// ── STATE ──────────────────────────────
+let works = [];
+let currentFilter   = "Te gjitha";
+let selectedGenreHome  = "";
+let formGenreSelected  = "";
+
+// ══════════════════════════════════════
+// FIREBASE — LOAD
+// ══════════════════════════════════════
+async function loadWorks() {
+  showLoading(true);
+  try {
+    const q   = query(collection(db, COLL), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      // Databaza bosh — shto veprat fillestare
+      for (const w of DEFAULT_WORKS) {
+        await addDoc(collection(db, COLL), { ...w, createdAt: serverTimestamp() });
+      }
+      // Ngarko sërish
+      const snap2 = await getDocs(query(collection(db, COLL), orderBy("createdAt", "desc")));
+      works = snap2.docs.map(d => ({ id: d.id, ...d.data() }));
+    } else {
+      works = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    }
+  } catch(e) {
+    showToast("⚠️ Gabim lidhje me Firebase. Kontrollo config-un.");
+    console.error(e);
+    works = [];
+  }
+  showLoading(false);
+  renderWorks();
+}
+
+// ══════════════════════════════════════
+// FIREBASE — SAVE
+// ══════════════════════════════════════
+async function saveWork(workData) {
+  const docRef = await addDoc(collection(db, COLL), {
+    ...workData,
+    createdAt: serverTimestamp()
+  });
+  return docRef.id;
+}
+
+// ══════════════════════════════════════
+// LOADING INDICATOR
+// ══════════════════════════════════════
+function showLoading(on) {
+  const grid = document.getElementById('works-grid');
+  if (on) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon" style="animation:spin 1.2s linear infinite;display:inline-block">⏳</div>
+        <div class="empty-state-text" style="margin-top:12px">Duke ngarkuar veprat…</div>
+      </div>`;
+  }
+}
+
+// ══════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  const screenMap = { home:'screen-home', works:'screen-works', add:'screen-add' };
+  const tabIndex  = { home:0, works:1, add:2 };
+  document.getElementById(screenMap[name]).classList.add('active');
+  document.querySelectorAll('.nav-tab')[tabIndex[name]].classList.add('active');
+  if (name === 'works') loadWorks();
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+window.showScreen = showScreen;
+
+// ══════════════════════════════════════
+// HOME — ZGJEDHJA E RUBRIKËS
+// ══════════════════════════════════════
+function selectGenre(card) {
+  document.querySelectorAll('.genre-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedGenreHome = card.dataset.genre;
+  document.getElementById('btn-explore').disabled = false;
+}
+window.selectGenre = selectGenre;
+
+function goToWorks() {
+  currentFilter = selectedGenreHome === "Te gjitha" ? "Te gjitha" : selectedGenreHome;
+  showScreen('works');
+  document.querySelectorAll('.filter-pill').forEach(p => {
+    const lbl = p.textContent.trim();
+    p.classList.toggle('active',
+      (currentFilter === "Te gjitha" && lbl === "Të Gjitha") || lbl === currentFilter);
+  });
+}
+window.goToWorks = goToWorks;
+
+// ══════════════════════════════════════
+// RENDER WORKS
+// ══════════════════════════════════════
+function genreClass(g) {
+  return ({Poezi:'poezi',Ese:'ese',Pershkrim:'pershkrim',Tregim:'tregim',Aforizma:''})[g]||'';
+}
+function getInitials(n) {
+  return n.split(' ').map(x=>x[0]).join('').substring(0,2).toUpperCase();
+}
+
+function renderWorks() {
+  const grid     = document.getElementById('works-grid');
+  const filtered = currentFilter === "Te gjitha" ? works : works.filter(w => w.genre === currentFilter);
+
+  document.getElementById('works-screen-title').textContent =
+    currentFilter === "Te gjitha" ? "Të Gjitha Veprat Letrare" : currentFilter;
+  document.getElementById('works-count').textContent =
+    filtered.length === 1 ? "1 vepër" : `${filtered.length} vepra`;
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="empty-state">
+      <div class="empty-state-icon">📜</div>
+      <div class="empty-state-text">Nuk ka ende vepra në këtë rubrikë.</div>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(w => `
+    <div class="work-card" id="card-${w.id}">
+      <div class="work-stripe ${genreClass(w.genre)}"></div>
+      <div class="work-body">
+        <div class="work-meta">
+          <span class="work-badge ${genreClass(w.genre)}">${w.genre}</span>
+          <span class="work-date">${w.year || '2025'}</span>
+        </div>
+        <div class="work-title">${w.title}</div>
+        <div class="work-text" id="text-${w.id}">${w.text.replace(/\n/g,'<br>')}</div>
+        <div class="work-footer">
+          <div class="work-author">
+            <div class="work-author-avatar">${getInitials(w.author)}</div>
+            <div class="work-author-name">${w.author}</div>
+          </div>
+          <button class="btn-read" onclick="toggleRead('${w.id}',this)">Lexo Më Shumë ↓</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleRead(id, btn) {
+  const el = document.getElementById(`text-${id}`);
+  const expanded = el.classList.toggle('expanded');
+  btn.textContent = expanded ? 'Mbyll ↑' : 'Lexo Më Shumë ↓';
+}
+window.toggleRead = toggleRead;
+
+function filterWorks(pill, genre) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  currentFilter = genre;
+  renderWorks();
+}
+window.filterWorks = filterWorks;
+
+// ══════════════════════════════════════
+// FORM
+// ══════════════════════════════════════
+function selectFormGenre(pill) {
+  document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('selected'));
+  pill.classList.add('selected');
+  formGenreSelected = pill.dataset.val;
+}
+window.selectFormGenre = selectFormGenre;
+
+async function submitWork() {
+  const genre   = formGenreSelected;
+  const title   = document.getElementById('form-title').value.trim();
+  const emri    = document.getElementById('form-emri').value.trim();
+  const mbiemri = document.getElementById('form-mbiemri').value.trim();
+  const text    = document.getElementById('form-text').value.trim();
+
+  if (!genre || !title || !emri || !mbiemri || !text) {
+    showToast('⚠️ Ju lutemi plotësoni të gjitha fushat.');
+    return;
+  }
+
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = 'Duke ngarkuar…';
+  btn.disabled = true;
+
+  try {
+    await saveWork({
+      genre,
+      title,
+      text,
+      author: `${emri} ${mbiemri}`,
+      year: new Date().getFullYear().toString()
+    });
+
+    // Reset form
+    formGenreSelected = '';
+    document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('selected'));
+    ['form-title','form-emri','form-mbiemri','form-text'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+
+    showToast('✦ Vepra u ngarkua me sukses!');
+    setTimeout(() => showScreen('works'), 900);
+  } catch(e) {
+    showToast('⚠️ Gabim gjatë ngarkimit. Provo sërish.');
+    console.error(e);
+  }
+
+  btn.textContent = 'Ngarko Veprën ✦';
+  btn.disabled = false;
+}
+window.submitWork = submitWork;
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ── INIT ──
+loadWorks();
+</script>
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</body>
+</html>
